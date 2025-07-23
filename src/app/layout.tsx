@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import './globals.css';
+import Navbar from '@/components/Navbar';
 
 const neue = localFont({
   src: [
@@ -58,6 +59,7 @@ export default function RootLayout({
       <body
         className={`${humane.variable} ${neue.variable} ${doner.variable} ${donerdisplay.variable} antialiased`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
