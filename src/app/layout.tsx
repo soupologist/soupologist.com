@@ -9,6 +9,7 @@ const neue = localFont({
   src: [
     { path: './fonts/neue-montreal/NeueMontreal-Light.woff2', weight: '300', style: 'normal' },
     { path: './fonts/neue-montreal/NeueMontreal-Regular.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/neue-montreal/NeueMontreal-Medium.woff2', weight: '500', style: 'normal' },
     { path: './fonts/neue-montreal/NeueMontreal-Bold.woff2', weight: '700', style: 'normal' },
   ],
   variable: '--font-neue',
@@ -23,6 +24,7 @@ const humane = localFont({
     { path: './fonts/humane/Humane-Medium.woff2', weight: '500', style: 'normal' },
     { path: './fonts/humane/Humane-SemiBold.woff2', weight: '600', style: 'normal' },
     { path: './fonts/humane/Humane-Bold.woff2', weight: '700', style: 'normal' },
+    { path: './fonts/humane/Humane-ExtraBold.woff2', weight: '800', style: 'normal' },
     { path: './fonts/humane/Humane-Black.woff2', weight: '900', style: 'normal' },
   ],
   variable: '--font-humane',

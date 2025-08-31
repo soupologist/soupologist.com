@@ -6,12 +6,12 @@ import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
 const navItems = [
+  { label: 'About', href: '/about' },
   { label: 'Films', href: '/films' },
   { label: 'Music', href: '/music' },
   { label: 'Projects', href: '/projects' },
   { label: 'Designs', href: '/designs' },
   { label: 'Blog', href: '/blog' },
-  { label: 'About', href: '/about' },
 ];
 
 export default function Navbar() {
@@ -19,24 +19,38 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Toggle Button */}
-      <div className="absolute top-6 left-6 z-50">
+      {/* Desktop Navbar */}
+      <div className="absolute top-6 right-6 z-40 hidden md:flex space-x-8">
+        {navItems.map((item) => (
+          <Link
+            key={item.label}
+            href={item.href}
+            className="text-lg uppercase font-medium hover:text-blue-500 transition"
+            style={{ fontFamily: 'var(--font-neue)' }}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+
+      {/* Toggle Button for Mobile */}
+      <div className="absolute top-6 left-6 z-50 md:hidden">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-white p-2"
+          className="text-black p-2"
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
-      {/* Fullscreen Overlay Menu */}
+      {/* Fullscreen Overlay Menu (Mobile) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-black bg-opacity-95 flex flex-col items-center justify-center space-y-8 text-white"
+            className="fixed inset-0 z-40 bg-background bg-opacity-95 flex flex-col items-center justify-center space-y-8 text-foreground"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.8 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             {navItems.map((item, idx) => (
@@ -48,9 +62,8 @@ export default function Navbar() {
               >
                 <Link
                   href={item.href}
-                  className="text-3xl md:text-5xl tracking-wide hover:text-red-500 transition"
+                  className="text-3xl md:text-5xl tracking-wide hover:text-blue-500 transition font-donerdisplay"
                   onClick={() => setIsOpen(false)}
-                  style={{ fontFamily: 'var(--font-donerdisplay)' }}
                 >
                   {item.label}
                 </Link>

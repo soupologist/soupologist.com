@@ -7,6 +7,8 @@ const config: Config = {
       fontFamily: {
         neue: ['var(--font-neue)'],
         humane: ['var(--font-humane'],
+        doner: ['var(--font-doner)'],
+        donerdisplay: ['var(--font-donerdisplay']
       },
     },
   },
