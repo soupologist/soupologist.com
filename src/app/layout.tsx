@@ -62,7 +62,7 @@ export default function RootLayout({
         className={`${humane.variable} ${neue.variable} ${doner.variable} ${donerdisplay.variable} antialiased`}
       >
         <Navbar />
-        {children}
+        <main className="pt-20"> {children}</main>
       </body>
     </html>
   );
