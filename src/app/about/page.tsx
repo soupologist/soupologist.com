@@ -22,7 +22,7 @@ export default function AboutPage() {
             About Me
           </h1>
           <p className="font-neue text-lg md:text-xl leading-relaxed mb-4">
-            sup, I'm <span className="font-medium">Sai Ashish Vure</span>. <br />I like to make
+            sup, I&apos;m <span className="font-medium">Sai Ashish Vure</span>. <br />I like to make
             stuff, whether it be websites, films, music, or designs. <br />
           </p>
 
