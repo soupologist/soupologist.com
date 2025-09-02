@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import './globals.css';
@@ -62,7 +61,7 @@ export default function RootLayout({
         className={`${humane.variable} ${neue.variable} ${doner.variable} ${donerdisplay.variable} antialiased`}
       >
         <Navbar />
-        <main className="pt-20"> {children}</main>
+        <main className="pt-0"> {children}</main>
       </body>
     </html>
   );

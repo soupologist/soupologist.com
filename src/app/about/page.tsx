@@ -22,11 +22,13 @@ export default function AboutPage() {
             About Me
           </h1>
           <p className="font-neue text-lg md:text-xl leading-relaxed mb-4">
-            sup, I&apos;m <span className="font-medium">Sai Ashish Vure</span>. <br />I like to make
-            stuff, whether it be websites, films, music, or designs. <br />
+            sup, I&apos;m <span className="font-medium">Sai Ashish Vure</span>.
           </p>
 
-          <p>it's often</p>
+          <p>
+            The point of this website is so that I could have a piece of myself out there and a
+            space just for myself and my creations.
+          </p>
         </div>
       </div>
     </main>

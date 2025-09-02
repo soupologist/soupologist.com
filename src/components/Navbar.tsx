@@ -19,32 +19,44 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Desktop Navbar */}
-      <div className="absolute top-6 right-6 z-40 hidden md:flex space-x-8">
-        {navItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="text-lg uppercase font-medium hover:text-blue-500 transition"
-            style={{ fontFamily: 'var(--font-neue)' }}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </div>
-
-      {/* Toggle Button for Mobile */}
-      <div className="absolute top-6 left-6 z-50 md:hidden">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="text-black p-2"
-          aria-label="Toggle menu"
+      {/* Navbar Wrapper */}
+      <header className="absolute top-0 left-0 w-full z-50 px-4 md:px-8 py-3 flex items-center justify-between">
+        {/* Left - Logo/Title */}
+        <Link
+          href="/"
+          className="text-xl md:text-xl font-bold"
+          style={{ fontFamily: 'var(--font-neue)' }}
         >
-          {isOpen ? <X size={32} /> : <Menu size={32} />}
-        </button>
-      </div>
+          soupologist
+        </Link>
 
-      {/* Fullscreen Overlay Menu (Mobile) */}
+        {/* Desktop Nav Items */}
+        <nav className="hidden md:flex space-x-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="text-sm md:text-base uppercase font-medium hover:text-blue-500 transition"
+              style={{ fontFamily: 'var(--font-neue)' }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Mobile Toggle Button */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-black p-1"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Overlay Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -58,11 +70,11 @@ export default function Navbar() {
                 key={item.label}
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * idx }}
+                transition={{ delay: 0.08 * idx }}
               >
                 <Link
                   href={item.href}
-                  className="text-3xl md:text-5xl tracking-wide hover:text-blue-500 transition font-donerdisplay"
+                  className="text-2xl md:text-4xl tracking-wide hover:text-blue-500 transition font-donerdisplay"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}

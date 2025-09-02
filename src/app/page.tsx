@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#FDF5D7] flex justify-center overflow-hidden">
-      <div className="w-full flex flex-col md:flex-row items-center justify-between border-2 px-16">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between px-16">
         {/* Left Text Section */}
         <div className="text-left md:text-left">
           <h1 className="text-9xl md:text-[15vw] font-extrabold font-humane leading-tight">
