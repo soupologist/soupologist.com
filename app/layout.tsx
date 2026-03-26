@@ -1,15 +1,65 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Add your local font
+const ppFragmentGlare = localFont({
+  src: [
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-GlareRegular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-GlareExtraBold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-pp-fragment-glare",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const ppFragmentSans = localFont({
+  src: [
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-SansLight.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-SansRegular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-SansExtraBold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-pp-fragment-sans",
+});
+
+const ppFragmentSerif = localFont({
+  src: [
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-SerifRegular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-SerifLight.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/pp-fragment/PPFragment-SerifExtraBold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-pp-fragment-serif",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +75,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${ppFragmentGlare.variable} ${ppFragmentSans.variable} ${ppFragmentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
