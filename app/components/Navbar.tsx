@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const navItems = [
   { name: "Home", href: "/" },
-  { name: "Work", href: "/work" },
   { name: "About", href: "/about" },
   { name: "Music", href: "/music" },
   { name: "Film", href: "/film" },
+  { name: "W*rk", href: "/work" },
 ];
 
 export default function Navbar() {

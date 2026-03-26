@@ -1,4 +1,6 @@
-export default function AboutPage() {
+import ExperienceSection from "../components/ExperienceSection";
+
+export default function WorkPage() {
   return (
     <main className="px-6 md:px-0">
       {/* Container */}
@@ -11,40 +13,24 @@ export default function AboutPage() {
           W*rk
         </h1>
 
-        {/* Intro paragraph */}
-        <p className="text-base md:text-lg font-sans leading-relaxed mb-8">
-          I\'m a fourth year Computer Science student in BITS Pilani, Hyderabad
-          Campus.
-        </p>
-
-        <p className="text-base md:text-lg font-sans leading-relaxed mb-8">
-          Over the years, I’ve worked across design, engineering, and product,
-          always trying to keep things clean and intentional.
+        <p className="leading-relaxed font-sans mb-6">
+          To put it simply, I like designing and making stuff, either in the
+          context of software or otherwise, as you can see in some other
+          avenues.
         </p>
 
         {/* Section */}
         <section className="mt-16">
-          <h2 className="text-xl md:text-2xl mb-6">Work</h2>
+          <h2 className="text-xl md:text-2xl mb-6 font-head">Experience</h2>
 
-          <p className="leading-relaxed mb-6">
-            I’ve spent time working on product design and frontend engineering,
-            focusing on building experiences that feel fast, minimal, and
-            intuitive.
+          <p className="leading-relaxed mb-6 font-sans">
+            I currently work in BlackRock Mumbai as an intern, under the
+            Quantitative Analytics Engineering team.
           </p>
 
-          <p className="leading-relaxed mb-6">
-            Previously, I worked on growth and design systems, helping teams
-            ship cohesive and scalable products.
-          </p>
-        </section>
-
-        {/* Section */}
-        <section className="mt-16">
-          <h2 className="text-xl md:text-2xl mb-6">Elsewhere</h2>
-
-          <p className="leading-relaxed mb-6">
-            Outside of work, I enjoy photography, writing, and collecting
-            inspiration from well-designed products and spaces.
+          <p className="leading-relaxed mb-6 font-sans">
+            I've previously interned at iCIMS for a few months in the Summer of
+            2025.
           </p>
         </section>
 
