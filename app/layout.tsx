@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Navbar from "../components/Navbar";
 
-// Add your local font
+const neueMontreal = localFont({
+  src: [
+    {
+      path: "../public/fonts/neue-montreal/NeueMontreal-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/neue-montreal/NeueMontreal-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  variable: "--font-neue-montreal",
+});
+
 const ppFragmentGlare = localFont({
   src: [
     {
@@ -75,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ppFragmentGlare.variable} ${ppFragmentSans.variable} ${ppFragmentSerif.variable} h-full antialiased`}
+      className={`${ppFragmentGlare.variable} ${ppFragmentSans.variable} ${ppFragmentSerif.variable} ${neueMontreal.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Navbar />

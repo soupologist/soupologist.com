@@ -8,7 +8,7 @@ export default function Home() {
 
         <a className="text-sans">
           This is the landing page for Soupologist, a tool to help you find the
-          best soup recipes. Click here to get started!
+          best soup recipes.
         </a>
       </main>
     </div>

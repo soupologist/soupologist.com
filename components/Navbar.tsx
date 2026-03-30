@@ -6,6 +6,7 @@ import Link from "next/link";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
+  { name: "Blog", href: "/blog" },
   { name: "Music", href: "/music" },
   { name: "Film", href: "/film" },
   { name: "W*rk", href: "/work" },
@@ -17,7 +18,7 @@ export default function Navbar() {
   return (
     <header className="w-full">
       <div className="mx-auto px-6 md:px-8">
-        <div className="flex items-center justify-between py-6">
+        <div className="flex items-center justify-between py-6 font-neue">
           {/* Left: Site Name */}
           <Link href="/" className="text-base tracking-tight">
             soupologist

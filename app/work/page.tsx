@@ -1,4 +1,4 @@
-import ExperienceSection from "../components/ExperienceSection";
+import ExperienceSection from "../../components/ExperienceSection";
 
 export default function WorkPage() {
   return (
