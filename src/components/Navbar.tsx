@@ -20,14 +20,18 @@ export default function Navbar() {
       <div className="mx-auto px-6 md:px-8">
         <div className="flex items-center justify-between py-6 font-neue">
           {/* Left: Site Name */}
-          <Link href="/" className="text-base tracking-tight">
+          <Link href="/" className="text-base tracking-wide">
             soupologist
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link key={item.name} href={item.href} className="text-sm">
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-neue tracking-wide"
+              >
                 {item.name}
               </Link>
             ))}

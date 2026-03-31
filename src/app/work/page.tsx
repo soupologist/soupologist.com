@@ -14,9 +14,7 @@ export default function WorkPage() {
         </h1>
 
         <p className="leading-relaxed font-sans mb-6">
-          To put it simply, I like designing and making stuff, either in the
-          context of software or otherwise, as you can see in some other
-          avenues.
+          currently, i'm a fourth year student at bits pilani, hyderabad campus.
         </p>
 
         {/* Section */}
