@@ -17,8 +17,11 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full">
-      <div className="mx-auto px-6 md:px-8">
+    <header className="fixed top-0 left-0 w-full z-50">
+      {/* Subtle gradient for readability */}
+      <div className="absolute inset-0 bg-linear-to-b from-black/40 to-transparent pointer-events-none" />
+
+      <div className="relative mx-auto px-6 md:px-8">
         <div className="flex items-center justify-between py-6 font-neue">
           {/* Left: Site Name */}
           <Link href="/" className="text-base tracking-wide">
@@ -31,7 +34,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-neue tracking-wide"
+                className="text-sm tracking-wide"
               >
                 {item.name}
               </Link>
@@ -47,7 +50,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden">
+        <div className="md:hidden bg-black/80 backdrop-blur-md">
           <div className="mx-auto px-6 pb-6 flex flex-col gap-4">
             {navItems.map((item) => (
               <Link

@@ -1,5 +1,3 @@
-import ExperienceSection from "../../components/ExperienceSection";
-
 export default function WorkPage() {
   return (
     <main className="px-6 md:px-0">

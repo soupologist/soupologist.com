@@ -1,15 +1,23 @@
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-background">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
-        <h1 className="text-6xl font-head text-center bg-background">
-          Soupologist
-        </h1>
+    <div className="relative w-full h-screen overflow-hidden bg-background">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/videos/bg.mp4" type="video/mp4" />
+      </video>
 
-        <a className="text-sans">
-          This is the landing page for Soupologist, a tool to help you find the
-          best soup recipes.
-        </a>
+      {/* Overlay (IMPORTANT) */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* Content */}
+      <main className="relative z-10 flex flex-col h-full items-center justify-center text-center px-6">
+        <h1 className="text-9xl font-humane font-bold">SOUPOLOGIST</h1>
       </main>
     </div>
   );
