@@ -11,6 +11,7 @@ const navItems = [
   { name: "Music", href: "/music" },
   { name: "Film", href: "/film" },
   { name: "W*rk", href: "/work" },
+  { name: "Books", href: "/books" },
 ];
 
 export default function Navbar() {
