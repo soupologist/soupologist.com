@@ -1,37 +1,45 @@
+import Image from 'next/image';
+
 export default function AboutPage() {
   return (
     <main className="px-6 md:px-0">
-      {/* Container */}
-      <div className="mx-auto max-w-3xl">
-        {/* Top spacing */}
-        <div className="pt-24 md:pt-32" />
+      {/* Top spacing */}
+      <div className="pt-24 md:pt-32" />
 
+      {/* Card */}
+      <div className="mx-auto max-w-3xl rounded-b-none border border-[var(--border)] bg-[var(--surface)] px-8 py-10 md:px-12 md:py-14 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
         {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-head leading-tight tracking-tight mb-10">
-          About
+        <h1 className="text-3xl md:text-4xl font-head leading-tight tracking-widest mb-10">
+          about
         </h1>
 
         {/* Intro paragraph */}
-        <p className="font-sans leading-relaxed mb-8">
-          I've always wanted a personal website for myself to put all my stuff
-          in one place and be able to put myself out there.
+        <p className="font-neue leading-relaxed tracking-wide text-(--text) mb-8">
+          wsg. i've set up this website here as essentially an archive to put whatever i make in a consolidated location: whether it be music, design, or just shitposts.
         </p>
+
+        {/* Image */}
+        <div className="mb-12 w-full">
+          <Image
+            src="/photos/me-redshirt.jpg"
+            alt="Sai in red shirt"
+            width={200}
+            height={150}
+            className="w-fit h-auto object-cover rounded-lg"
+          />
+        </div>
 
         {/* Section */}
         <section className="mt-16">
-          <p className="leading-relaxed mb-6 font-sans">
-            my name is sai ashish vure. it's
+          <p className="leading-relaxed mb-6 font-neue text-(--text) tracking-wide ">
+            in the streets i'm a computer science grad from bits hyd working in tech, but in the sheets (as in outside of work), i like doing creative stuff like music, design, and previously film. 
           </p>
 
-          <p className="leading-relaxed mb-6">
-            Previously, I worked on growth and design systems, helping teams
-            ship cohesive and scalable products.
-          </p>
         </section>
-
-        {/* Footer spacing */}
-        <div className="h-24 md:h-32" />
       </div>
+
+      {/* Footer spacing */}
+      <div className="h-24 md:h-32" />
     </main>
   );
 }
