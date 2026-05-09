@@ -7,7 +7,7 @@ export default function AboutPage() {
       <div className="pt-24 md:pt-32" />
 
       {/* Card */}
-      <div className="mx-auto max-w-3xl rounded-b-none border border-[var(--border)] bg-[var(--surface)] px-8 py-10 md:px-12 md:py-14 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
+      <div className="mx-auto max-w-3xl rounded-b-none border border-(--border) bg-(--surface) px-8 py-10 md:px-12 md:py-14 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
         {/* Heading */}
         <h1 className="text-3xl md:text-4xl font-head leading-tight tracking-widest mb-10">
           about
