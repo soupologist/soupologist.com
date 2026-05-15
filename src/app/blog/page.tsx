@@ -37,7 +37,7 @@ export default function BlogPage() {
 
                 {/* Content */}
                 <div>
-                  <h2 className="text-lg md:text-xl tracking-tight text-(--text) transition-colors group-hover:text-[var(--foreground)]">
+                  <h2 className="text-lg md:text-xl tracking-tight text-(--text) transition-colors group-hover:text-foreground">
                     {post.title}
                   </h2>
 

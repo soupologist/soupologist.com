@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# soupologist
 
-## Getting Started
+A personal portfolio and creative archive built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, and MDX-powered blog content.
 
-First, run the development server:
+## Project overview
+
+- Fullscreen landing experience with a background video at `/`.
+- Custom local font loading using `next/font/local` and a typography-first design system.
+- Dark, neon-inspired theme driven by CSS variables in `src/app/globals.css`.
+- Responsive navigation including desktop and mobile menu states.
+- MDX blog support using `next-mdx-remote` and `gray-matter` for frontmatter parsing.
+- Static blog page generation from `src/content/blog/*.mdx`.
+
+## Key pages
+
+- `/` — homepage with video background and site title.
+- `/about` — personal introduction and archive concept.
+- `/blog` — list of blog posts generated from MDX files.
+- `/blog/[slug]` — individual MDX-powered blog post pages.
+- `/design` — design section placeholder.
+- `/work` — current work / internship summary.
+
+The app also includes a navigation bar with links for `Proj`, `Music`, `Film`, and `Books`, which can be extended later.
+
+## Architecture
+
+- `src/app/layout.tsx` — root layout with local fonts and `Navbar`.
+- `src/app/page.tsx` — landing page.
+- `src/components/Navbar.tsx` — responsive header and mobile menu.
+- `src/lib/posts.ts` — blog post loader using filesystem-based MDX.
+- `src/content/blog/` — source MDX files for blog posts.
+- `public/videos/bg.mp4` — homepage background video.
+- `public/fonts/` — local font assets.
+
+## Scripts
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run start
+npm run lint
+npm run format
+npm run format:check
+npm run escape-quotes
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. Start the dev server:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Open `http://localhost:3000` in your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build and deploy
 
-## Deploy on Vercel
+Build for production:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Start the production server locally:
+
+```bash
+npm run start
+```
+
+## Notes
+
+- Blog content is sourced from `src/content/blog/*.mdx`.
+- `src/lib/posts.ts` reads MDX files with frontmatter metadata.
+- `next-mdx-remote` renders MDX content on the blog post pages.
+
+## Dependencies
+
+- `next` 16.2.1
+- `react` 19.2.4
+- `react-dom` 19.2.4
+- `next-mdx-remote` for MDX rendering
+- `gray-matter` for parsing frontmatter
+- `tailwindcss` v4 for styling
+
+## Development notes
+
+This repo is structured as a creative hub for code, design, music, and writing. The current implementation focuses on a polished landing experience, typed MDX blog posts, and a flexible layout driven by custom fonts and theme variables.
