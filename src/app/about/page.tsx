@@ -25,7 +25,7 @@ export default function AboutPage() {
             alt="Sai in red shirt"
             width={200}
             height={150}
-            className="w-fit h-auto object-cover rounded-lg"
+            className="w-fit h-auto object-cover"
           />
         </div>
 

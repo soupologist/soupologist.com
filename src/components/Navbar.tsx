@@ -7,12 +7,12 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Blog", href: "/blog" },
-  { name: "Proj", href: "/proj" },
-  { name: "Design", href: "/design" },
+  // { name: "Proj", href: "/proj" },
+  // { name: "Design", href: "/design" },
   { name: "Music", href: "/music" },
-  { name: "Film", href: "/film" },
+  // { name: "Film", href: "/film" },
   { name: "W*rk", href: "/work" },
-  { name: "Books", href: "/books" },
+  // { name: "Books", href: "/books" },
 ];
 
 export default function Navbar() {

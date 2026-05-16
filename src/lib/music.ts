@@ -46,3 +46,16 @@ export function getAllMusicEntries(): MusicEntry[] {
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 }
+
+export function getMusicEntry(slug: string) {
+  const fullPath = path.join(musicDirectory, `${slug}.mdx`);
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+
+  const { data, content } = matter(fileContents);
+
+  return {
+    ...data,
+    content,
+    slug,
+  };
+}
