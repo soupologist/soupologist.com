@@ -49,13 +49,24 @@ export function getAllMusicEntries(): MusicEntry[] {
 
 export function getMusicEntry(slug: string) {
   const fullPath = path.join(musicDirectory, `${slug}.mdx`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
 
+  if (!fs.existsSync(fullPath)) {
+    return null;
+  }
+
+  const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
   return {
-    ...data,
-    content,
     slug,
+    title: data.title,
+    date: data.date,
+    duration: data.duration,
+    audio: data.audio,
+    cover: data.cover || undefined,
+    tags: data.tags || [],
+    location: data.location || undefined,
+    published: data.published ?? true,
+    content,
   };
 }
