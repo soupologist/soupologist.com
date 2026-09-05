@@ -1,15 +1,74 @@
 @import "tailwindcss";
 
+/*
+ * Tailwind v4 theme tokens.
+ * Mono-first: IBM Plex Mono is the workhorse for body, headings and UI.
+ * Humane is an ultra-condensed display face — only legible above ~text-6xl,
+ * so it is deliberately NOT wired to `font-head`. Use `font-humane` for the
+ * oversized moments (event titles, big numerals) and nothing else.
+ */
+@theme {
+  --color-bg: #0d0d0d;
+  --color-surface: #131313;
+  --color-border: #242422;
+  --color-text: #b5b1a8;
+  --color-foreground: #e8e5dd;
+  --color-muted: #6e6c66;
+
+  --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
+  --font-head: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
+  --font-neue: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
+  --font-humane: var(--font-humane), "Arial Narrow", sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+}
+
+/*
+ * Raw custom properties for the `text-(--text)` / `border-(--border)` /
+ * `bg-(--surface)` shorthand used throughout the site. Tailwind's @theme
+ * emits `--color-*` names, so these have to be declared separately.
+ */
 :root {
-  --font-serif: var(--font-instrument);
-  --font-mono-custom: var(--font-plex);
+  --bg: #0d0d0d;
+  --surface: #131313;
+  --border: #242422;
+  --text: #b5b1a8;
+  --foreground: #e8e5dd;
+  --muted: #6e6c66;
 }
 
 html {
-  background: #0d0d0d;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
-  background: #0d0d0d;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Sharp corners on native controls — no soft-card look. */
+button,
+input,
+select,
+textarea {
+  border-radius: 0;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--bg);
+}
+
+/* Respect users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

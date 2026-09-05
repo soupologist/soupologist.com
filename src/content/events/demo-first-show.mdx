@@ -1,0 +1,44 @@
+---
+# DEMO POST — delete this file once you've written a real one.
+# It exists so /events renders something on first run, and it reuses the
+# clip already sitting in public/videos.
+title: "Popping Bottles"
+date: "2026-09-04"
+venue: "Somewhere"
+city: "Bengaluru"
+lineup: ["TBD"]
+summary: "Placeholder post wired to the clip already in public/videos — replace it with the real thing."
+tags: ["demo"]
+published: true
+---
+
+This is a demo post so you can see the layout working before you write
+anything. Delete `src/content/events/demo-first-show.mdx` when you're done
+looking.
+
+Paragraphs render through the same prose components as `/blog`, so the writing
+part behaves exactly like a blog post. Everything below is the extra stuff.
+
+<Clip
+  src="/videos/popping-bottles.mp4"
+  orientation="landscape"
+  caption="A clip that was already in the repo, standing in for real footage."
+/>
+
+The player above is native HTML5 video with `preload="metadata"` — the file
+itself doesn't download until someone hits play, and starting one clip pauses
+every other clip on the page.
+
+<Pull>Swap this out for something you actually heard.</Pull>
+
+The track credit under a clip only appears once you give it a `track`. Paste a
+Spotify share link into the `track` prop and it renders the credit plus a
+"play here" toggle that mounts the real Spotify player on demand.
+
+<Setlist
+  label="what this would look like"
+  tracks={[
+    { title: "First Song", note: "no link yet" },
+    { title: "Second Song", artist: "Some Artist" },
+  ]}
+/>

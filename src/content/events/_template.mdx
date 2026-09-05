@@ -1,0 +1,79 @@
+---
+# Copy this file to src/content/events/<your-slug>.mdx
+# The filename (minus .mdx) becomes the URL: /events/<your-slug>
+# Files starting with _ are never routed, so this one stays invisible.
+title: "Night 2, Bandland"
+date: "2026-08-22" # ISO — this is what the list sorts on
+venue: "NESCO Grounds"
+city: "Mumbai"
+lineup: ["Headliner First", "Then The Openers"]
+cover: "/images/events/your-slug/cover.jpg" # optional, 3:2 works best
+coverAlt: "Crowd lit red from the side of the stage"
+summary: "One or two lines. Shows up on the /events index."
+tags: ["indie", "outdoor"]
+published: true
+---
+
+Just write. Regular markdown paragraphs are the default — the components below
+are for the media.
+
+## A clip with the song attached
+
+`track` accepts any of three formats, so paste whatever Spotify hands you:
+the share URL (`https://open.spotify.com/track/…`), the URI
+(`spotify:track:…`), or the bare 22-character ID.
+
+<Clip
+  src="/videos/events/your-slug/clip-01.mp4"
+  poster="/images/events/your-slug/clip-01.jpg"
+  caption="He stopped the band and made the whole field sing the second verse."
+  track="https://open.spotify.com/track/PASTE_THE_SHARE_LINK"
+  trackTitle="Song Name"
+  trackArtist="Artist Name"
+/>
+
+Clips are `portrait` by default because phone footage usually is. Pass
+`orientation="landscape"` or `orientation="square"` when it isn't, and
+`silent` for a clip with no audio worth hearing.
+
+<Clip
+  src="/videos/events/your-slug/clip-02.mp4"
+  orientation="landscape"
+  caption="Wide shot of the stage before doors."
+  silent
+/>
+
+## Photos
+
+Bare strings are fine; objects let you add alt text and a lightbox caption.
+
+<Gallery
+  columns={3}
+  images={[
+    { src: "/images/events/your-slug/01.jpg", alt: "Queue outside the gate" },
+    { src: "/images/events/your-slug/02.jpg", alt: "Stage from the barricade", caption: "Front left, about an hour in." },
+    "/images/events/your-slug/03.jpg",
+  ]}
+/>
+
+## A quote that deserves the big serif
+
+<Pull>The sound guy gave up and the crowd just took over.</Pull>
+
+## The setlist
+
+<Setlist
+  tracks={[
+    { title: "Opener", spotify: "spotify:track:PASTE_ID_HERE", note: "obviously" },
+    { title: "A Cover", artist: "Originally by Someone Else" },
+    "A song I could not identify",
+  ]}
+/>
+
+## Just a track, no video
+
+<SpotifyTrack
+  url="https://open.spotify.com/track/PASTE_THE_SHARE_LINK"
+  title="Song Name"
+  artist="Artist Name"
+/>
