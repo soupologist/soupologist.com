@@ -4,7 +4,6 @@ const links = [
   { label: "things", href: "/work" },
   { label: "thoughts", href: "/blog" },
   { label: "music", href: "/music" },
-  { label: "events", href: "/events" },
   { label: "films", href: "/film" },
   { label: "about", href: "/about" },
 ];

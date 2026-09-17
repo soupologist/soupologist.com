@@ -2,10 +2,8 @@
 
 /*
  * Tailwind v4 theme tokens.
- * Mono-first: IBM Plex Mono is the workhorse for body, headings and UI.
- * Humane is an ultra-condensed display face — only legible above ~text-6xl,
- * so it is deliberately NOT wired to `font-head`. Use `font-humane` for the
- * oversized moments (event titles, big numerals) and nothing else.
+ * Mono-first: IBM Plex Mono is the workhorse for body, headings and UI —
+ * including the oversized moments (event titles, big numerals).
  */
 @theme {
   --color-bg: #0d0d0d;
@@ -18,7 +16,6 @@
   --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
   --font-head: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
   --font-neue: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
-  --font-humane: var(--font-humane), "Arial Narrow", sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
 }
 
