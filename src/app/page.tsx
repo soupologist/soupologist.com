@@ -23,34 +23,7 @@ export default function Home() {
       </header>
 
       {/* main canvas */}
-      <section className="relative z-20 min-h-screen">
-        {/* introduction */}
-        <div
-          className="
-            absolute
-            left-[45%]
-            top-[48%]
-            w-[46%]
-            max-w-[560px]
-            md:left-[55%]
-            md:top-[44%]
-            md:w-[35%]          "
-        >
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[#6e6c66]">
-            oh hey.
-          </p>
-
-          <h1 className="font-instrument text-[clamp(3.5rem,7vw,7rem)] leading-[0.82] tracking-[-0.055em]">
-            i&apos;m
-            <br />
-            ashish.
-          </h1>
-
-          <p className="mt-8 max-w-[350px] font-mono text-sm leading-[1.7] text-[#a3a098] md:text-base">
-            i make things on the internet, listen to too much music, watch
-            movies and occasionally have a good idea.
-          </p>
-        </div>
+      <section className="relative z-20 min-h-screen">       
 
         {/* navigation */}
         <nav
