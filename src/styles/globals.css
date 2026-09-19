@@ -31,6 +31,9 @@
   --text: #b5b1a8;
   --foreground: #e8e5dd;
   --muted: #6e6c66;
+
+  --font-plex: "IBM Plex Mono";
+  --font-instrument: "Instrument Serif";
 }
 
 html {

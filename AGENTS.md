@@ -1,7 +1,6 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# soupologist.com
 
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-
-<!-- END:nextjs-agent-rules -->
+Astro site (content collections + MDX + Tailwind v4). No UI framework — the two
+interactive bits (`Navbar.astro`, `BackgroundVideo.astro`) are plain `<script>`
+islands, not React. Don't reach for `@astrojs/react` or similar unless a piece
+of interactivity actually needs component-level state.

@@ -1,0 +1,45 @@
+---
+---
+
+<video
+  data-bg-video
+  class="fixed inset-0 z-0 h-full w-full object-cover object-top opacity-50"
+  src="/videos/popping-bottles-epic.mp4"
+  autoplay
+  playsinline
+></video>
+
+{/* scrim so text stays legible over the footage */}
+<div class="fixed inset-0 z-10 bg-[#0d0d0d]/55"></div>
+
+<button
+  data-bg-video-toggle
+  class="fixed bottom-8 left-8 z-50 font-mono text-[10px] uppercase tracking-[0.2em] text-[#b5b1a8]"
+>
+  sound on
+</button>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>("[data-bg-video]");
+  const toggle = document.querySelector<HTMLButtonElement>(
+    "[data-bg-video-toggle]",
+  );
+  let playCount = 0;
+
+  toggle?.addEventListener("click", () => {
+    if (!video) return;
+    video.muted = !video.muted;
+    toggle.textContent = video.muted ? "sound off" : "sound on";
+  });
+
+  video?.addEventListener("ended", () => {
+    playCount += 1;
+    if (playCount === 2) {
+      video.muted = true;
+      if (toggle) toggle.textContent = "sound off";
+    }
+
+    video.currentTime = 0;
+    video.play();
+  });
+</script>
