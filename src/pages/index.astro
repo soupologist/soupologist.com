@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { mediaUrl } from "../lib/media";
 // import BackgroundVideo from "../components/BackgroundVideo.astro";
 
 const links = [
@@ -13,8 +14,6 @@ const links = [
 
 <BaseLayout>
   <main class="min-h-screen overflow-hidden text-[#e8e5dd]">
-    {/* <BackgroundVideo /> */}
-
     {/* navbar */}
     <header class="fixed left-0 top-0 z-50 w-full px-6 py-5 md:px-10 md:py-7">
       <nav class="flex items-center justify-between font-mono">
@@ -35,7 +34,19 @@ const links = [
     </header>
 
     {/* main canvas */}
-    <section class="relative z-20 min-h-screen">
+    <section
+      class="relative z-20 flex min-h-screen items-center justify-center px-6 py-24 md:px-10"
+    >
+      {/* feature clip — unmuted with native controls; browsers block
+          autoplay with sound, so it waits for a click */}
+      <video
+        class="max-h-[60vh] w-auto max-w-full border border-foreground/15 bg-black md:max-w-xl"
+        src={mediaUrl("/videos/popping-bottles-epic.mp4")}
+        controls
+        playsinline
+        preload="metadata"
+      ></video>
+
       {/* accent dot */}
       <div class="absolute bottom-8 right-8 h-2 w-2 rounded-full bg-[#ffb52e]">
       </div>
