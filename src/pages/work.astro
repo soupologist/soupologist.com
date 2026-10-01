@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// logos live in public/images/logos/ — wordmarks are fine, they scale to a fixed height
+// logos live in public/images/logos/ — trim transparent padding first, then they
+// all fit the same 160×44 box (wide wordmarks hit the width, the rest the height)
 const jobs = [
   {
     company: "Baya Systems",
@@ -57,7 +58,7 @@ const jobs = [
               <img
                 src={job.logo}
                 alt={job.company}
-                class="mb-3 h-7 w-auto max-w-36 object-contain"
+                class="mb-4 h-11 w-40 object-contain object-left"
               />
 
               <h2 class="mb-3 text-sm text-(--muted)">{job.role}</h2>

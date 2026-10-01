@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// a /now page (nownownow.com) — what i'm up to at the moment. bump `updated`
+// whenever you edit it so it's obvious how stale it is
+const updated = "Oct 2026";
+const location = "Bengaluru, Karnataka";
+
+const sections = [
+  {
+    label: "work",
+    items: [
+      "software engineer at baya systems, building NoCs for chiplets in python and C++.",
+    ],
+  },
+  {
+    label: "making",
+    items: ["TODO: music / design stuff in progress"],
+  },
+  {
+    label: "listening",
+    items: ["TODO: what's on repeat"],
+  },
+  {
+    label: "reading",
+    items: ["TODO: current book"],
+  },
+];
+---
+
+<BaseLayout title="now">
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <h1 class="mb-4 text-3xl tracking-tight sm:text-8xl">now</h1>
+
+      <p class="mb-16 text-xs uppercase tracking-[0.15em] text-(--muted)">
+        updated {updated} · {location}
+      </p>
+
+      <dl class="space-y-12">
+        {
+          sections.map((section) => (
+            <div class="grid gap-3 md:grid-cols-[7rem_1fr] md:gap-8">
+              <dt class="pt-1 font-mono text-xs text-(--muted)">
+                {section.label}
+              </dt>
+              <dd>
+                {section.items.map((item) => (
+                  <p class="mb-3 text-[15px] leading-[1.85] text-(--text)/90 last:mb-0 md:text-[16px]">
+                    {item}
+                  </p>
+                ))}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </article>
+  </main>
+</BaseLayout>
