@@ -3,7 +3,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 // logos live in public/images/logos/ — trim transparent padding first, then they
 // all fit the same 160×44 box (wide wordmarks hit the width, the rest the height)
-const jobs = [
+// `paragraphs` always show; `more` is the longer write-up behind the expand toggle
+// (leave it empty and the toggle hides itself)
+type Job = {
+  company: string;
+  role: string;
+  location: string;
+  dates: string;
+  logo: string;
+  paragraphs: string[];
+  more: string[];
+};
+
+const jobs: Job[] = [
   {
     company: "Baya Systems",
     role: "Software Engineer",
@@ -13,6 +25,7 @@ const jobs = [
     paragraphs: [
       "it's a startup so i just work on whatever's needed. we mainly work on building NoCs for chiplets, using python and C++.",
     ],
+    more: [],
   },
   {
     company: "BlackRock",
@@ -23,6 +36,7 @@ const jobs = [
     paragraphs: [
       "Worked on internal tooling for an attribution platform. Built an LLM-powered codebase exploration tool using tree-sitter and Google ADK.",
     ],
+    more: ["played a bunch of table tennis."],
   },
   {
     company: "iCIMS",
@@ -33,7 +47,8 @@ const jobs = [
     paragraphs: [
       "Designed and developed a dashboard for fetching data from an internal database.",
     ],
-  }
+    more: [],
+  },
 ];
 ---
 
@@ -47,31 +62,63 @@ const jobs = [
         {
           jobs.map((job, index) => (
             <li class="relative pb-14 pl-8 last:pb-0">
-              <span
-                class={`absolute left-[-5.5px] top-2.5 h-2.5 w-2.5 rounded-full ${
+              {/* pointy-top hexagon marker, centred on the rail and on the
+                  logo's midline (logo is h-11 = 44px → 22px − half of 12px) */}
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class={`absolute left-[-6.5px] top-4 h-3 w-3 ${
                   index === 0
-                    ? "bg-[#ffb52e]"
-                    : "border border-(--muted) bg-[#070707]"
+                    ? "fill-[#ffb52e]"
+                    : "fill-[#070707] stroke-(--muted)"
                 }`}
-              />
+              >
+                <polygon
+                  points="12,1.5 21.1,6.75 21.1,17.25 12,22.5 2.9,17.25 2.9,6.75"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
 
-              <img
-                src={job.logo}
-                alt={job.company}
-                class="mb-4 h-11 w-40 object-contain object-left"
-              />
+              {/* native <details> so it expands without any JS; the summary
+                  is the always-visible card, `more` is what opens up */}
+              <details class="group">
+                <summary class="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <img
+                    src={job.logo}
+                    alt={job.company}
+                    class="mb-4 h-11 w-40 object-contain object-left"
+                  />
 
-              <h2 class="mb-3 text-sm text-(--muted)">{job.role}</h2>
+                  <h2 class="mb-3 text-sm text-(--muted)">{job.role}</h2>
 
-              {job.paragraphs.map((paragraph) => (
-                <p class="mb-4 text-[15px] leading-[1.85] text-(--text)/90 md:text-[16px]">
-                  {paragraph}
-                </p>
-              ))}
+                  {job.paragraphs.map((paragraph) => (
+                    <p class="mb-4 text-[14px] leading-[1.8] text-(--text)/90 md:text-[15px]">
+                      {paragraph}
+                    </p>
+                  ))}
 
-              <p class="text-xs uppercase tracking-[0.15em] text-(--muted)">
-                {job.dates} · {job.location}
-              </p>
+                  <p class="flex items-center gap-3 text-xs uppercase tracking-[0.15em] text-(--muted)">
+                    <span>{job.dates} · {job.location}</span>
+                    {job.more.length > 0 && (
+                      <span class="ml-auto shrink-0 transition-colors group-hover:text-[#ffb52e]">
+                        <span class="group-open:hidden">more +</span>
+                        <span class="hidden group-open:inline">less −</span>
+                      </span>
+                    )}
+                  </p>
+                </summary>
+
+                {job.more.length > 0 && (
+                  <div class="mt-6 border-l border-(--border) pl-5">
+                    {job.more.map((paragraph) => (
+                      <p class="mb-4 text-[14px] leading-[1.8] text-(--text)/80 last:mb-0 md:text-[15px]">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </details>
             </li>
           ))
         }
