@@ -1,60 +1,71 @@
 ---
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// a /now page (nownownow.com) — what i'm up to at the moment. bump `updated`
-// whenever you edit it so it's obvious how stale it is
-const updated = "Oct 2026";
-const location = "Bengaluru, Karnataka";
+// a /now page (nownownow.com). each snapshot is a file in content/now — to
+// write a new one, add a new dated file rather than editing the old one, so
+// the older entries stick around below as a log
+const entries = (await getCollection("now")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
 
-const sections = [
-  {
-    label: "work",
-    items: [
-      "software engineer at baya systems, building NoCs for chiplets in python and C++.",
-    ],
-  },
-  {
-    label: "making",
-    items: ["TODO: music / design stuff in progress"],
-  },
-  {
-    label: "listening",
-    items: ["TODO: what's on repeat"],
-  },
-  {
-    label: "reading",
-    items: ["TODO: current book"],
-  },
-];
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({
+    date: formatDate(entry.data.date),
+    Content: (await render(entry)).Content,
+  })),
+);
+const [current, ...past] = rendered;
+
+const prose =
+  "space-y-6 text-[15px] leading-[1.85] md:text-[16px] [&_a]:underline [&_a]:underline-offset-4";
 ---
 
 <BaseLayout title="now">
   <main class="min-h-screen bg-[#070707] text-foreground">
     <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
-      <h1 class="mb-4 text-3xl tracking-tight sm:text-8xl">now</h1>
+      <h1 class="mb-4 font-glare text-6xl tracking-loose sm:text-8xl">now</h1>
 
-      <p class="mb-16 text-xs uppercase tracking-[0.15em] text-(--muted)">
-        updated {updated} · {location}
-      </p>
-
-      <dl class="space-y-12">
-        {
-          sections.map((section) => (
-            <div class="grid gap-3 md:grid-cols-[7rem_1fr] md:gap-8">
-              <dt class="pt-1 font-mono text-xs text-(--muted)">
-                {section.label}
-              </dt>
-              <dd>
-                {section.items.map((item) => (
-                  <p class="mb-3 text-[15px] leading-[1.85] text-(--text)/90 last:mb-0 md:text-[16px]">
-                    {item}
-                  </p>
-                ))}
-              </dd>
+      {
+        current && (
+          <>
+            <h2 class="mb-16 text-xs uppercase tracking-[0.15em] text-(--muted)">
+              updated {current.date}
+            </h2>
+            <div class:list={[prose, "text-(--text)/90"]}>
+              <current.Content />
             </div>
-          ))
-        }
-      </dl>
+          </>
+        )
+      }
+
+      {
+        past.length > 0 && (
+          <section class="mt-32 border-t border-(--border) pt-16">
+            <h2 class="mb-12 font-glare text-3xl">before</h2>
+            <div class="space-y-16">
+              {past.map(({ date, Content }) => (
+                <div>
+                  <p class="mb-4 text-xs uppercase tracking-[0.15em] text-(--muted)">
+                    {date}
+                  </p>
+                  <div class:list={[prose, "text-(--text)/60"]}>
+                    <Content />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
     </article>
   </main>
 </BaseLayout>

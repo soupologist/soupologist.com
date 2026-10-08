@@ -23,4 +23,13 @@ const music = defineCollection({
   }),
 });
 
-export const collections = { blog, music };
+// one file per /now snapshot, named by date (2026-10-08.md). newest is shown
+// as the current one, the rest stay on the page as a log
+const now = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/now" }),
+  schema: z.object({
+    date: z.coerce.date(),
+  }),
+});
+
+export const collections = { blog, music, now };
