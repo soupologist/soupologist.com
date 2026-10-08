@@ -1,0 +1,9 @@
+// static site on cloudflare workers — no worker script, just serve dist/
+{
+  "name": "soupologist",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
