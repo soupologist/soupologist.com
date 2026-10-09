@@ -3,9 +3,10 @@ import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
-// one page per tier list. entries are revealed one at a time in the order they
-// were ranked; the board below fills up as you go, or "skip to final" shows it
-// all at once. without JS the whole board just renders (cards stay hidden)
+// one page per tier list, read by scrolling: entries stack in the order they
+// were ranked and the sticky board fills in as each one scrolls past (and
+// empties again on the way back up). "show full list" fills it all at once.
+// without JS the board is just shown complete
 export async function getStaticPaths() {
   const lists = await getCollection("tierlists");
   return lists.map((list) => ({ params: { list: list.id }, props: { list } }));
@@ -48,154 +49,145 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
 
 <BaseLayout title={title}>
   <main class="min-h-screen bg-[#070707] text-foreground">
-    <article
+    <div
       data-tierlist
-      data-total={items.length}
-      class="mx-auto max-w-3xl px-6 pb-32 pt-36 md:px-10 md:pt-44"
+      class="mx-auto grid max-w-6xl gap-x-16 px-6 pt-28 md:px-10 md:pt-36 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
     >
-      <a
-        href="/tiers"
-        class="mb-6 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-[#ffb52e]"
-        >← tiers</a
-      >
-      <h1 class="mb-4 text-6xl tracking-loose sm:text-8xl">{title}</h1>
-      {
-        blurb && (
-          <p class="mb-4 text-[15px] leading-[1.85] text-(--text)/90 md:text-[16px]">
-            {blurb}
-          </p>
-        )
-      }
-      <p class="mb-16 text-xs uppercase tracking-[0.15em] text-(--muted)">
-        {items.length} ranked
-      </p>
+      <header class="mb-8 lg:col-span-2 lg:mb-12">
+        <a
+          href="/tiers"
+          class="mb-3 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-[#ffb52e]"
+          >← tiers</a
+        >
+        <h1 class="text-2xl md:text-3xl">{title}</h1>
+        {
+          blurb && (
+            <p class="mt-3 max-w-xl text-[15px] leading-[1.85] text-(--text)/90">
+              {blurb}
+            </p>
+          )
+        }
+      </header>
 
-      {
-        items.length > 0 && (
-          <>
-            {/* detail card for one entry at a time — shown by the script */}
-            <section data-stage hidden class="mb-16">
-              {items.map((item) => (
-                <div data-card={item.step} hidden>
-                  {item.photos.length > 0 && (
-                    <div class="-mx-6 mb-8 flex snap-x gap-3 overflow-x-auto px-6 md:mx-0 md:px-0">
-                      {item.photos.map((photo, i) => (
-                        <Image
-                          src={photo}
-                          alt={`${item.name}, photo ${i + 1}`}
-                          width={720}
-                          class="h-64 w-auto max-w-none shrink-0 snap-start border border-(--border) object-cover md:h-80"
-                        />
-                      ))}
-                    </div>
-                  )}
-
-                  <div class="mb-6 flex items-start gap-5">
-                    <span
-                      class="flex h-14 w-14 shrink-0 items-center justify-center text-2xl text-[#1a1a17]"
-                      style={`background:${tierColor(tiers.indexOf(item.tier))}`}
-                    >
-                      {item.tier}
-                    </span>
-                    <div>
-                      <h2 class="text-3xl leading-tight md:text-4xl">
-                        {item.name}
-                      </h2>
-                      {item.place && (
-                        <p class="mt-1 text-xs uppercase tracking-[0.15em] text-(--muted)">
-                          {item.place}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div class="space-y-5 text-[15px] leading-[1.85] text-(--text)/90 md:text-[16px] [&_a]:underline [&_a]:underline-offset-4">
-                    <item.Content />
-                  </div>
-                </div>
-              ))}
-
-              {/* end of the reveal: what the final card area says */}
-              <div data-card="final" hidden>
-                <h2 class="text-3xl md:text-4xl">the full list</h2>
-                <p class="mt-2 text-[15px] text-(--muted)">
-                  tap any entry on the board to read about it.
-                </p>
+      {/* the board — sticky on top on phones, sticky alongside on desktop.
+          every tile is rendered; the script hides the ones not scrolled to */}
+      <aside class="sticky top-16 z-10 -mx-6 bg-[#070707] px-6 pb-4 pt-2 md:top-20 md:-mx-10 md:px-10 lg:order-2 lg:mx-0 lg:self-start lg:px-0 lg:pb-0">
+        <div class="border border-black bg-black">
+          {tiers.map((tier, tierIndex) => (
+            <div class="flex min-h-11 border-b border-black last:border-b-0 lg:min-h-20">
+              <div
+                class="flex w-11 shrink-0 items-center justify-center p-1 text-center text-sm break-words text-[#1a1a17] lg:w-24 lg:text-xl"
+                style={`background:${tierColor(tierIndex)}`}
+              >
+                {tier}
               </div>
-
-              <nav class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs uppercase tracking-[0.15em]">
-                <button data-action="prev" class="text-(--muted) transition-colors hover:text-[#ffb52e] disabled:opacity-30 disabled:hover:text-(--muted)">
-                  ← prev
-                </button>
-                <span data-counter class="tabular-nums text-(--muted)"></span>
-                <button data-action="next" class="text-foreground transition-colors hover:text-[#ffb52e] disabled:opacity-30 disabled:hover:text-foreground">
-                  next →
-                </button>
-                <button data-action="final" class="ml-auto text-(--muted) transition-colors hover:text-[#ffb52e]">
-                  skip to final
-                </button>
-                <button data-action="replay" hidden class="ml-auto text-(--muted) transition-colors hover:text-[#ffb52e]">
-                  ↺ start over
-                </button>
-              </nav>
-            </section>
-          </>
-        )
-      }
-
-      {/* the board, tiermaker-style — every tile is rendered, the script
-          hides the ones not revealed yet */}
-      <div class="border border-black bg-black">
-        {tiers.map((tier, tierIndex) => (
-          <div class="flex min-h-20 border-b border-black last:border-b-0 md:min-h-24">
-            <div
-              class="flex w-20 shrink-0 items-center justify-center p-2 text-center text-lg break-words text-[#1a1a17] md:w-28 md:text-xl"
-              style={`background:${tierColor(tierIndex)}`}
-            >
-              {tier}
+              <div
+                data-row
+                class="flex flex-1 flex-wrap content-start bg-[#1a1a17] transition-colors data-[over]:bg-[#2c2c28]"
+              >
+                {items
+                  .filter((item) => item.tier === tier)
+                  .map((item) => (
+                    <button
+                      data-chip={item.step}
+                      title={item.place ? `${item.name} — ${item.place}` : item.name}
+                      class="relative h-11 min-w-11 cursor-grab touch-none overflow-hidden outline-offset-[-2px] select-none hover:opacity-80 active:cursor-grabbing data-[current]:outline-2 data-[current]:outline-white lg:h-20 lg:min-w-20 lg:outline-offset-[-3px] lg:data-[current]:outline-3"
+                    >
+                      {item.logo ? (
+                        // logos keep their shape — full tile height, natural width
+                        <Image
+                          src={item.logo}
+                          alt={item.name}
+                          height={160}
+                          draggable="false"
+                          class="h-full w-auto"
+                        />
+                      ) : item.photos[0] ? (
+                        <Image
+                          src={item.photos[0]}
+                          alt={item.name}
+                          width={160}
+                          height={160}
+                          draggable="false"
+                          class="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span class="flex h-full w-full items-center justify-center bg-[#2c2c28] p-1 text-center text-[10px] leading-tight text-[#e8e5dd] lg:p-2 lg:text-xs">
+                          {item.name}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+              </div>
             </div>
-            <div
-              data-row
-              class="flex flex-1 flex-wrap content-start bg-[#1a1a17] transition-colors data-[over]:bg-[#2c2c28]"
-            >
-              {items
-                .filter((item) => item.tier === tier)
-                .map((item) => (
-                  <button
-                    data-chip={item.step}
-                    title={item.place ? `${item.name} — ${item.place}` : item.name}
-                    class="relative h-20 min-w-20 cursor-grab touch-none overflow-hidden outline-offset-[-3px] transition-opacity select-none hover:opacity-80 active:cursor-grabbing data-[current]:outline-3 data-[current]:outline-white md:h-24 md:min-w-24"
-                  >
-                    {item.logo ? (
-                      // logos keep their shape — full tile height, natural width
-                      <Image
-                        src={item.logo}
-                        alt={item.name}
-                        height={192}
-                        draggable="false"
-                        class="h-full w-auto"
-                      />
-                    ) : item.photos[0] ? (
-                      <Image
-                        src={item.photos[0]}
-                        alt={item.name}
-                        width={192}
-                        height={192}
-                        draggable="false"
-                        class="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <span class="flex h-full w-full items-center justify-center bg-[#2c2c28] p-2 text-center text-xs leading-tight text-[#e8e5dd]">
-                        {item.name}
-                      </span>
-                    )}
-                  </button>
+          ))}
+        </div>
+
+        <div class="mt-3 flex items-center justify-between text-xs uppercase tracking-[0.15em] text-(--muted)">
+          <span data-counter>{items.length} ranked</span>
+          {
+            items.length > 0 && (
+              <button
+                data-show-all
+                hidden
+                class="transition-colors hover:text-[#ffb52e]"
+              >
+                show full list
+              </button>
+            )
+          }
+        </div>
+      </aside>
+
+      {/* the read — one entry after another */}
+      <div class="pb-[50vh] lg:order-1">
+        {
+          items.length === 0 && (
+            <p class="py-16 text-[15px] text-(--muted)">nothing ranked yet.</p>
+          )
+        }
+        {items.map((item) => (
+          <section
+            data-entry={item.step}
+            class="scroll-mt-80 border-t border-(--border) py-16 first:border-t-0 first:pt-6 lg:scroll-mt-28 lg:py-24 lg:first:pt-0"
+          >
+            <div class="mb-6 flex items-center gap-4">
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center text-lg text-[#1a1a17]"
+                style={`background:${tierColor(tiers.indexOf(item.tier))}`}
+              >
+                {item.tier}
+              </span>
+              <div>
+                <h2 class="text-xl leading-tight">{item.name}</h2>
+                {item.place && (
+                  <p class="mt-0.5 text-xs uppercase tracking-[0.15em] text-(--muted)">
+                    {item.place}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {item.photos.length > 0 && (
+              <div class="-mx-6 mb-6 flex snap-x gap-3 overflow-x-auto px-6 md:-mx-10 md:px-10 lg:mx-0 lg:px-0">
+                {item.photos.map((photo, i) => (
+                  <Image
+                    src={photo}
+                    alt={`${item.name}, photo ${i + 1}`}
+                    width={640}
+                    class="h-56 w-auto max-w-none shrink-0 snap-start border border-(--border) object-cover"
+                  />
                 ))}
+              </div>
+            )}
+
+            <div class="space-y-5 text-[15px] leading-[1.85] text-(--text)/90 [&_a]:underline [&_a]:underline-offset-4">
+              <item.Content />
             </div>
-          </div>
+          </section>
         ))}
       </div>
-    </article>
+    </div>
 
     {/* the board looks draggable. it isn't. (gif from tenor, converted to an
         animated webp at half the size; lazy so it only loads for draggers) */}
@@ -226,73 +218,78 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
   </main>
 </BaseLayout>
 
+<style>
+  /* a tile landing on the board */
+  @keyframes drop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+  [data-chip][data-new] {
+    animation: drop-in 300ms cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+</style>
+
 <script>
   const root = document.querySelector<HTMLElement>("[data-tierlist]");
-  const stage = root?.querySelector<HTMLElement>("[data-stage]");
+  const sections = [...document.querySelectorAll<HTMLElement>("[data-entry]")];
 
-  if (root && stage) {
-    const total = Number(root.dataset.total);
-    const cards = [...stage.querySelectorAll<HTMLElement>("[data-card]")];
+  if (root && sections.length > 0) {
     const chips = [...root.querySelectorAll<HTMLButtonElement>("[data-chip]")];
-    const counter = stage.querySelector<HTMLElement>("[data-counter]")!;
-    const button = (action: string) =>
-      stage.querySelector<HTMLButtonElement>(`[data-action="${action}"]`)!;
+    const counter = root.querySelector<HTMLElement>("[data-counter]")!;
+    const showAllButton = root.querySelector<HTMLButtonElement>("[data-show-all]")!;
+    const total = sections.length;
 
-    // `revealed` = how many entries are on the board; `shown` = whose card is
-    // open (null on the final screen until a chip is picked)
-    let revealed = 1;
-    let shown: number | null = 0;
+    // `revealed` = how many entries have scrolled past the reading line;
+    // `current` = the one being read right now (outlined on the board)
+    let revealed = 0;
+    let current = -1;
+    let showAll = false;
 
     const render = () => {
-      const done = revealed >= total && shown === null;
-      cards.forEach((card) => {
-        card.hidden =
-          card.dataset.card === "final" ? !done : Number(card.dataset.card) !== shown;
-      });
       chips.forEach((chip) => {
         const step = Number(chip.dataset.chip);
-        chip.hidden = step >= revealed;
-        chip.toggleAttribute("data-current", step === shown);
+        const visible = showAll || step < revealed;
+        if (visible && chip.hidden) chip.toggleAttribute("data-new", true);
+        if (!visible) chip.removeAttribute("data-new");
+        chip.hidden = !visible;
+        chip.toggleAttribute("data-current", step === current);
       });
-
-      const finished = revealed >= total;
-      counter.textContent = done ? `${total} / ${total}` : `${(shown ?? 0) + 1} / ${total}`;
-      button("prev").disabled = !finished && revealed <= 1;
-      button("next").disabled = finished && (shown === null || shown >= total - 1);
-      button("final").hidden = finished;
-      button("replay").hidden = !finished;
+      counter.textContent = showAll
+        ? `${total} ranked`
+        : `${revealed} / ${total}`;
+      showAllButton.hidden = showAll || revealed >= total;
     };
 
-    const go = (action: string) => {
-      const finished = revealed >= total;
-      if (action === "next") {
-        if (!finished) {
-          revealed += 1;
-          shown = revealed - 1;
-        } else if (shown !== null && shown < total - 1) {
-          shown += 1;
-        } else return;
-      } else if (action === "prev") {
-        if (!finished) {
-          if (revealed <= 1) return;
-          revealed -= 1;
-          shown = revealed - 1;
-        } else {
-          shown = shown === null ? total - 1 : Math.max(0, shown - 1);
-        }
-      } else if (action === "final") {
-        revealed = total;
-        shown = null;
-      } else if (action === "replay") {
-        revealed = 1;
-        shown = 0;
-      }
+    // an entry counts once its top passes 60% of the way down the screen
+    const update = () => {
+      const line = window.innerHeight * 0.6;
+      const passed = sections.filter((s) => s.getBoundingClientRect().top < line).length;
+      if (passed === revealed) return;
+      revealed = passed;
+      current = passed - 1;
       render();
     };
 
-    stage.addEventListener("click", (event) => {
-      const action = (event.target as HTMLElement).closest<HTMLElement>("[data-action]")?.dataset.action;
-      if (action) go(action);
+    let queued = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          update();
+        });
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", update);
+
+    showAllButton.addEventListener("click", () => {
+      showAll = true;
+      render();
     });
 
     // tiles can be picked up and dragged around like a real tier maker — but
@@ -355,22 +352,15 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
       }),
     );
 
-    // once everything's out, the board doubles as a picker
+    // tapping a tile jumps to its write-up
     chips.forEach((chip) =>
       chip.addEventListener("click", () => {
         if (performance.now() - draggedAt < 400) return; // that was a drag
-        shown = Number(chip.dataset.chip);
-        render();
-        stage.scrollIntoView({ behavior: "smooth", block: "start" });
+        sections[Number(chip.dataset.chip)].scrollIntoView({ behavior: "smooth" });
       }),
     );
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowRight") go("next");
-      if (event.key === "ArrowLeft") go("prev");
-    });
-
-    stage.hidden = false;
+    update();
     render();
   }
 </script>
