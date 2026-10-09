@@ -32,7 +32,7 @@ const prose =
 <BaseLayout title="now">
   <main class="min-h-screen bg-[#070707] text-foreground">
     <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
-      <h1 class="mb-4 font-glare text-6xl tracking-loose sm:text-8xl">now</h1>
+      <h1 class="mb-4 text-6xl tracking-loose sm:text-8xl">now</h1>
 
       {
         current && (
@@ -50,7 +50,7 @@ const prose =
       {
         past.length > 0 && (
           <section class="mt-32 border-t border-(--border) pt-16">
-            <h2 class="mb-12 font-glare text-3xl">before</h2>
+            <h2 class="mb-12 text-3xl">before</h2>
             <div class="space-y-16">
               {past.map(({ date, Content }) => (
                 <div>

@@ -17,16 +17,6 @@
   --font-head: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
   --font-neue: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
-  --font-glare: "PP Fragment Glare", ui-serif, Georgia, serif;
-}
-
-/* secondary display face, sprinkled in for headings like /now */
-@font-face {
-  font-family: "PP Fragment Glare";
-  src: url("/fonts/pp-fragment/PPFragment-GlareRegular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
 }
 
 /*

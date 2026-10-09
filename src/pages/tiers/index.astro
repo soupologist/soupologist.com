@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// every tier list, with how many entries each has so far
+const lists = await getCollection("tierlists");
+const items = await getCollection("tieritems");
+const count = (id: string) => items.filter((item) => item.id.startsWith(`${id}/`)).length;
+---
+
+<BaseLayout title="tiers">
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <h1 class="mb-16 text-6xl tracking-loose sm:text-8xl">tiers</h1>
+
+      <ul class="divide-y divide-(--border) border-y border-(--border)">
+        {
+          lists.map((list) => (
+            <li>
+              <a
+                href={`/tiers/${list.id}`}
+                class="group flex items-baseline justify-between gap-6 py-6"
+              >
+                <span class="text-3xl transition-colors group-hover:text-[#ffb52e]">
+                  {list.data.title}
+                </span>
+                <span class="shrink-0 text-xs uppercase tracking-[0.15em] text-(--muted)">
+                  {count(list.id)} ranked
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </article>
+  </main>
+</BaseLayout>
