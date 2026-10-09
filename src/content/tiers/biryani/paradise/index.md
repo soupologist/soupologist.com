@@ -1,5 +1,5 @@
 ---
-name: paradise
+name: Paradise
 tier: B
 date: 2026-10-09
 place: secunderabad, hyderabad
