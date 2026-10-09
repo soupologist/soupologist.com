@@ -3,50 +3,31 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="about">
-  <main class="px-6 md:px-0">
-    {/* Top spacing */}
-    <div class="pt-24 md:pt-32"></div>
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <h1 class="mb-16 font-mono text-6xl tracking-loose sm:text-8xl">about</h1>
 
-    {/* Card */}
-    <div
-      class="mx-auto max-w-3xl rounded-b-none border border-(--border) bg-(--surface) px-8 py-10 md:px-12 md:py-14 shadow-[0_0_40px_rgba(0,0,0,0.3)]"
-    >
-      {/* Heading */}
-      <h1
-        class="text-3xl md:text-4xl font-head leading-tight tracking-widest mb-10"
-      >
-        about
-      </h1>
-
-      {/* Intro paragraph */}
-      <p class="font-neue leading-relaxed tracking-wide text-(--text) mb-8">
-        wsg. i've set up this website here as essentially an archive to put
-        whatever i make in a consolidated location: whether it be music,
-        design, or just shitposts.
-      </p>
-
-      {/* Image */}
-      <div class="mb-12 w-full">
-        <img
-          src="/photos/me-redshirt.jpg"
-          alt="Sai in red shirt"
-          width="200"
-          height="150"
-          class="w-fit h-auto object-cover"
-        />
-      </div>
-
-      {/* Section */}
-      <section class="mt-16">
-        <p class="leading-relaxed mb-6 font-neue text-(--text) tracking-wide">
-          in the streets i'm a computer science grad from bits hyd working in
-          tech, but in the sheets (as in outside of work), i like doing
-          creative stuff like music, design, and previously film.
+      <div class="space-y-6 text-[15px] leading-[1.85] text-(--text)/90 md:text-[16px]">
+        <p>
+          wsg. i've always wanted a space on the internet to put the stuff i make and maintain. 
         </p>
-      </section>
-    </div>
 
-    {/* Footer spacing */}
-    <div class="h-24 md:h-32"></div>
+        <img
+          src="/images/me-redshirt.jpg"
+          alt="Sai in red shirt"
+          class="my-12 w-56 border border-(--border)"
+        />
+
+        <p>
+          in the streets i'm a computer science grad from bits hyd working in
+          tech at a startup called <a
+            href="https://bayasystems.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline underline-offset-4 transition-colors hover:text-[#ffb52e]"
+            >Baya Systems</a>, but in the sheets (as in outside of work), i like doing creative stuff like music, design, film, etc.
+        </p>
+      </div>
+    </article>
   </main>
 </BaseLayout>
