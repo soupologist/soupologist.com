@@ -32,17 +32,17 @@ const now = defineCollection({
   }),
 });
 
-// tier lists — one folder per list under content/tiers, any topic:
-//   tiers/biryani/index.md              title (+ custom tiers) and the intro
-//                                       paragraph → /tiers/biryani
-//   tiers/biryani/paradise/index.md     one entry: frontmatter + write-up,
-//   tiers/biryani/paradise/1.jpg        with its photos sitting next to it
+// tier lists — one folder per list under content/tierlists, any topic:
+//   tierlists/biryani/index.md              title (+ custom tiers) and the intro
+//                                           paragraph → /tierlists/biryani
+//   tierlists/biryani/paradise/index.md     one entry: frontmatter + write-up,
+//   tierlists/biryani/paradise/1.jpg        with its photos sitting next to it
 // entries are revealed in `date` order (when you ranked it), so a new one just
 // needs today's date
 const tierlists = defineCollection({
   loader: glob({
     pattern: "*/index.md",
-    base: "./src/content/tiers",
+    base: "./src/content/tierlists",
     generateId: ({ entry }) => entry.split("/")[0],
   }),
   schema: z.object({
@@ -54,7 +54,7 @@ const tierlists = defineCollection({
 const tieritems = defineCollection({
   loader: glob({
     pattern: "*/*/index.md",
-    base: "./src/content/tiers",
+    base: "./src/content/tierlists",
     // "biryani/paradise" — the first segment is the list it belongs to
     generateId: ({ entry }) => entry.replace(/\/index\.md$/, ""),
   }),

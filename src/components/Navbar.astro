@@ -2,13 +2,12 @@
 const links = [
   { label: "now", href: "/now" },
   { label: "w*rk", href: "/work" },
-  { label: "blog", href: "/blog" },
-  { label: "music", href: "/music" },
+  { label: "tierlists", href: "/tierlists" },
   // { label: "film", href: "/film" },
   { label: "about", href: "/about" },
 ];
 
-// match nested routes too, so /blog/some-post still marks "blog"
+// match nested routes too, so /tierlists/biryani still marks "tierlists"
 const path = Astro.url.pathname.replace(/\/$/, "");
 const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
