@@ -13,7 +13,8 @@ export async function getStaticPaths() {
 }
 
 const { list } = Astro.props;
-const { title, blurb, tiers } = list.data;
+const { title, tiers } = list.data;
+const { Content: Intro } = await render(list);
 
 const entries = (
   await getCollection("tieritems", (item) => item.id.startsWith(`${list.id}/`))
@@ -60,13 +61,9 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
           >← tiers</a
         >
         <h1 class="text-2xl md:text-3xl">{title}</h1>
-        {
-          blurb && (
-            <p class="mt-3 max-w-xl text-[15px] leading-[1.85] text-(--text)/90">
-              {blurb}
-            </p>
-          )
-        }
+        <div class="mt-4 max-w-2xl space-y-5 text-[15px] leading-[1.85] text-(--text)/90 empty:hidden [&_a]:underline [&_a]:underline-offset-4">
+          <Intro />
+        </div>
       </header>
 
       {/* the board — sticky on top on phones, sticky alongside on desktop.
@@ -91,7 +88,7 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
                     <button
                       data-chip={item.step}
                       title={item.place ? `${item.name} — ${item.place}` : item.name}
-                      class="relative h-11 min-w-11 cursor-grab touch-none overflow-hidden outline-offset-[-2px] select-none hover:opacity-80 active:cursor-grabbing data-[current]:outline-2 data-[current]:outline-white lg:h-20 lg:min-w-20 lg:outline-offset-[-3px] lg:data-[current]:outline-3"
+                      class="relative h-11 min-w-11 cursor-grab touch-none overflow-hidden transition-opacity duration-300 select-none hover:opacity-80 active:cursor-grabbing data-[dim]:opacity-35 data-[dim]:hover:opacity-80 lg:h-20 lg:min-w-20"
                     >
                       {item.logo ? (
                         // logos keep their shape — full tile height, natural width
@@ -242,7 +239,7 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
     const total = sections.length;
 
     // `revealed` = how many entries have scrolled past the reading line;
-    // `current` = the one being read right now (outlined on the board)
+    // `current` = the one being read right now (the only tile not dimmed)
     let revealed = 0;
     let current = -1;
     let showAll = false;
@@ -254,7 +251,8 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
         if (visible && chip.hidden) chip.toggleAttribute("data-new", true);
         if (!visible) chip.removeAttribute("data-new");
         chip.hidden = !visible;
-        chip.toggleAttribute("data-current", step === current);
+        // the one being read stays lit, the rest of the board fades back
+        chip.toggleAttribute("data-dim", current >= 0 && step !== current);
       });
       counter.textContent = showAll
         ? `${total} ranked`

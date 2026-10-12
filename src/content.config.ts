@@ -33,20 +33,20 @@ const now = defineCollection({
 });
 
 // tier lists — one folder per list under content/tiers, any topic:
-//   tiers/biryani/list.json             title, blurb, tier names → /tiers/biryani
+//   tiers/biryani/index.md              title (+ custom tiers) and the intro
+//                                       paragraph → /tiers/biryani
 //   tiers/biryani/paradise/index.md     one entry: frontmatter + write-up,
 //   tiers/biryani/paradise/1.jpg        with its photos sitting next to it
 // entries are revealed in `date` order (when you ranked it), so a new one just
 // needs today's date
 const tierlists = defineCollection({
   loader: glob({
-    pattern: "*/list.json",
+    pattern: "*/index.md",
     base: "./src/content/tiers",
     generateId: ({ entry }) => entry.split("/")[0],
   }),
   schema: z.object({
     title: z.string(),
-    blurb: z.string().optional(),
     tiers: z.array(z.string()).default(["S", "A", "B", "C", "D", "F"]),
   }),
 });
