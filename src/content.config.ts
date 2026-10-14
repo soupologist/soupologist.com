@@ -32,6 +32,17 @@ const now = defineCollection({
   }),
 });
 
+// what changed on the site itself (keepachangelog.com, minus the version
+// numbers). one file per day something shipped, named by date, with the body
+// split into ## added / ## changed / ## removed / ## fixed — only the ones
+// that apply
+const changelog = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/changelog" }),
+  schema: z.object({
+    date: z.coerce.date(),
+  }),
+});
+
 // tier lists — one folder per list under content/tierlists, any topic:
 //   tierlists/biryani/index.md              title (+ custom tiers) and the intro
 //                                           paragraph → /tierlists/biryani
@@ -71,4 +82,11 @@ const tieritems = defineCollection({
     }),
 });
 
-export const collections = { blog, music, now, tierlists, tieritems };
+export const collections = {
+  blog,
+  music,
+  now,
+  changelog,
+  tierlists,
+  tieritems,
+};
