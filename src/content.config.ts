@@ -43,6 +43,23 @@ const changelog = defineCollection({
   }),
 });
 
+// one file per job for /work. frontmatter is the header (logo, role, dates),
+// the body is the write-up — any markdown, as long as it needs to be. `start`
+// is only for ordering (newest first); `dates` is what actually shows
+const work = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/work" }),
+  schema: z.object({
+    company: z.string(),
+    role: z.string(),
+    location: z.string(),
+    dates: z.string(),
+    start: z.coerce.date(),
+    // lives in public/images/logos/ — trim transparent padding first, then
+    // they all fit the same 160×44 box
+    logo: z.string(),
+  }),
+});
+
 // tier lists — one folder per list under content/tierlists, any topic:
 //   tierlists/biryani/index.md              title (+ custom tiers) and the intro
 //                                           paragraph → /tierlists/biryani
@@ -87,6 +104,7 @@ export const collections = {
   music,
   now,
   changelog,
+  work,
   tierlists,
   tieritems,
 };
