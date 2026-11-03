@@ -10,8 +10,10 @@ summary: Early-stage startup building Network-on-Chips (NoCs) — the interconne
 
 My work at Baya is very dynamic, considering that it's an early startup. Our main product is creating NoCs (network-on-chips)
 
+### what even is the company
+
 so Baya's main product is the Network-on-Chip (NoC) that lets components on a chip communicate more efficiently. For example, if your chip has a CPU, GPU, and some memory, the Network we build optimises the flow of data across the grid on the chip in order to improve overall performance and reduce latency. So under the hood, it's all highly optimised C++ code that runs the show.
 
 ## benefits of a small company
 
-Fun fact, our fridge is stocked to the brim with diet cokes usually. 
+I do like the fact that I can just walk up to whoever my problem is relevant to and get their thoughts almost instantly, or atleast get them aware of my issue. The office is always very bustling with constant yap from everyone around me, almost always technical discussion but there's a good amount of discussion as well. 

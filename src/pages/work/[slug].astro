@@ -22,8 +22,11 @@ const prose = [
   "[&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-(--accent)",
   "[&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-5",
   "[&_li::marker]:text-(--muted)",
-  "[&_h2]:pt-6 [&_h2]:text-lg [&_h2]:text-(--text)",
-  "[&_h3]:pt-4 [&_h3]:text-(--text)",
+  // headings sit closer to what follows than to what came before, and step
+  // up in size and brightness from the body so they read as headings
+  "[&_h2]:mt-14! [&_h2]:mb-1! [&_h2]:text-xl [&_h2]:font-medium [&_h2]:tracking-tight [&_h2]:text-foreground md:[&_h2]:text-2xl",
+  "[&_h3]:mt-10! [&_h3]:mb-1! [&_h3]:text-base [&_h3]:font-medium [&_h3]:text-foreground md:[&_h3]:text-lg",
+  "[&>:first-child]:mt-0!",
   "[&_img]:my-6 [&_img]:rounded-md [&_img]:border [&_img]:border-(--border)",
   "[&_code]:text-[0.9em] [&_code]:text-(--accent)",
 ].join(" ");
