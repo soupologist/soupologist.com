@@ -12,6 +12,7 @@
   --color-text: #b5b1a8;
   --color-foreground: #e8e5dd;
   --color-muted: #6e6c66;
+  --color-accent: #39ff14;
 
   --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
   --font-head: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
@@ -31,6 +32,7 @@
   --text: #b5b1a8;
   --foreground: #e8e5dd;
   --muted: #6e6c66;
+  --accent: #39ff14; /* neon green — links, hovers, the current-job marker */
 
   --font-plex: "IBM Plex Mono";
   --font-instrument: "Instrument Serif";

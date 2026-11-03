@@ -57,7 +57,7 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
       <header class="mb-8 lg:col-span-2 lg:mb-12">
         <a
           href="/tierlists"
-          class="mb-3 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-[#ffb52e]"
+          class="mb-3 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-(--accent)"
           >← tierlists</a
         >
         <h1 class="text-2xl md:text-3xl">{title}</h1>
@@ -127,7 +127,7 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
               <button
                 data-show-all
                 hidden
-                class="transition-colors hover:text-[#ffb52e]"
+                class="transition-colors hover:text-(--accent)"
               >
                 show full list
               </button>
@@ -206,7 +206,7 @@ const tierColor = (index: number) => tierColors[Math.min(index, tierColors.lengt
           uh-uh, you can't tell me nothing.
         </p>
         <form method="dialog" class="flex justify-end">
-          <button class="text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-[#ffb52e]">
+          <button class="text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-(--accent)">
             my bad
           </button>
         </form>
