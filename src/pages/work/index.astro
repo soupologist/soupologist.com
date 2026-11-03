@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// each job is a file in content/work — the timeline only shows the header and
+// the one-line `summary`; the body gets its own page at /work/<file name>.
+// newest first, by `start`
+const jobs = (await getCollection("work")).sort(
+  (a, b) => b.data.start.getTime() - a.data.start.getTime(),
+);
+---
+
+<BaseLayout title="work">
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-3xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <h1 class="mb-16 text-3xl tracking-tight sm:text-8xl">w*rk</h1>
+
+      {/* timeline — the rail is the list's left border, dots sit on it */}
+      <ol class="ml-1.5 border-l border-(--border)">
+        {
+          jobs.map(({ id, data: job }, index) => (
+            <li class="relative pb-16 pl-8 last:pb-0">
+              {/* pointy-top hexagon marker, centred on the rail and on the
+                  logo's midline (logo is h-11 = 44px → 22px − half of 12px) */}
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class={`absolute left-[-6.5px] top-4 h-3 w-3 ${
+                  index === 0
+                    ? "fill-[#ffb52e]"
+                    : "fill-[#070707] stroke-(--muted)"
+                }`}
+              >
+                <polygon
+                  points="12,1.5 21.1,6.75 21.1,17.25 12,22.5 2.9,17.25 2.9,6.75"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <a href={`/work/${id}`} class="group block">
+                <img
+                  src={job.logo}
+                  alt={job.company}
+                  class="mb-4 h-11 w-40 object-contain object-left"
+                />
+
+                <h2 class="text-sm text-(--text)/90">{job.role}</h2>
+                <p class="mb-4 text-[13px] text-(--muted)">
+                  {job.dates} · {job.location}
+                </p>
+
+                <p class="text-[14px] leading-[1.8] text-(--text)/90 md:text-[15px]">
+                  {job.summary}
+                </p>
+                <span class="mt-3 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors group-hover:text-[#ffb52e]">
+                  more →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </article>
+  </main>
+</BaseLayout>

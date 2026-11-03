@@ -5,6 +5,7 @@ location: Bengaluru, Karnataka
 dates: Jul 2026 — Present
 start: 2026-07-01
 logo: /images/logos/baya-systems.png
+summary: Early-stage startup building Network-on-Chips (NoCs) — the interconnect that moves data between the CPU, GPU and memory on a chip.
 ---
 
 My work at Baya is very dynamic, considering that it's an early startup. Our main product is creating NoCs (network-on-chips)

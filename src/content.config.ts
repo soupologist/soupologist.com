@@ -43,9 +43,10 @@ const changelog = defineCollection({
   }),
 });
 
-// one file per job for /work. frontmatter is the header (logo, role, dates),
-// the body is the write-up — any markdown, as long as it needs to be. `start`
-// is only for ordering (newest first); `dates` is what actually shows
+// one file per job. frontmatter is the header (logo, role, dates) plus the
+// one-or-two-line `summary` that /work's timeline shows; the body is the full
+// write-up on /work/<file name> — any markdown, as long as it needs to be.
+// `start` is only for ordering (newest first); `dates` is what actually shows
 const work = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/work" }),
   schema: z.object({
@@ -54,6 +55,7 @@ const work = defineCollection({
     location: z.string(),
     dates: z.string(),
     start: z.coerce.date(),
+    summary: z.string(),
     // lives in public/images/logos/ — trim transparent padding first, then
     // they all fit the same 160×44 box
     logo: z.string(),

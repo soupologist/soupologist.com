@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// one page per job — the full write-up from the body of content/work/<slug>.md
+export async function getStaticPaths() {
+  const jobs = await getCollection("work");
+  return jobs.map((job) => ({
+    params: { slug: job.id },
+    props: { job },
+  }));
+}
+
+const { job } = Astro.props;
+const { Content } = await render(job);
+const { company, role, dates, location, logo } = job.data;
+
+// tailwind's preflight strips list bullets and heading sizes, so put back
+// what a write-up is likely to use
+const prose = [
+  "space-y-4 text-[14px] leading-[1.8] text-(--text)/90 md:text-[15px]",
+  "[&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-[#ffb52e]",
+  "[&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-5",
+  "[&_li::marker]:text-(--muted)",
+  "[&_h2]:pt-6 [&_h2]:text-lg [&_h2]:text-(--text)",
+  "[&_h3]:pt-4 [&_h3]:text-(--text)",
+  "[&_img]:my-6 [&_img]:rounded-md [&_img]:border [&_img]:border-(--border)",
+  "[&_code]:text-[0.9em] [&_code]:text-[#ffb52e]",
+].join(" ");
+---
+
+<BaseLayout title={company.toLowerCase()}>
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-3xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <a
+        href="/work"
+        class="mb-10 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-[#ffb52e]"
+        >← w*rk</a
+      >
+
+      <header class="mb-12">
+        <img
+          src={logo}
+          alt={company}
+          class="mb-4 h-11 w-40 object-contain object-left"
+        />
+        <h1 class="text-sm text-(--text)/90">{role}</h1>
+        <p class="text-[13px] text-(--muted)">{dates} · {location}</p>
+      </header>
+
+      <div class={prose}>
+        <Content />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
