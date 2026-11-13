@@ -30,4 +30,10 @@ Another thing to note was how difficult it was to do something different. So sin
 
 We weren't allowed to use even free versions of third party vectordbs and my mentors suggested using the vector part of MySQL in order to do it, but that's not really the same as a dedicated vectordb.
 
+### ppo reveal
+The PPO reveal was quite unexpected, because I thought I had solid work and a decent presentation behind me. The only fault across my whole internship was the fact that I struggled a bit in the beginning to get things moving and progress was slow, but after switching up approaches things clicked quickly and I was able to recover pace and deliver what I had to by the end, that too with enough scope for incorporating other tools and ideas as well. 
+
+Frankly I was given the go-ahead to think about the project in the long term sense and that gave me some confidence as I was talking to people about stuff that will be done months later. It would have been nice if I was hinted in advance about my situation rather than being suddenly revealed like the way it was out of nowhere.
+
+Genuinely everyone who had worked with me were shocked with the decision and backed me and my skills, which was very nice to hear. 
 
