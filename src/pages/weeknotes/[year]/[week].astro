@@ -1,0 +1,98 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {
+  getWeeknotes,
+  readingTime,
+  weekRange,
+  weeknoteHref,
+} from "../../../lib/weeknotes";
+
+// one page per week — /weeknotes/2026/47
+export async function getStaticPaths() {
+  const notes = await getWeeknotes();
+  return notes.map((note, i) => ({
+    params: { year: String(note.year), week: String(note.week) },
+    // list is newest first, so the week after is the one before it
+    props: { note, newer: notes[i - 1], older: notes[i + 1] },
+  }));
+}
+
+const { note, newer, older } = Astro.props;
+const { Content } = await render(note);
+
+// tailwind's preflight strips list bullets and heading sizes, so put back
+// what a weeknote is likely to use
+const prose = [
+  "space-y-4 text-[14px] leading-[1.8] text-(--text)/90 md:text-[15px]",
+  "[&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-(--accent)",
+  "[&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-5",
+  "[&_li::marker]:text-(--muted)",
+  "[&_h2]:mt-12! [&_h2]:mb-1! [&_h2]:text-lg [&_h2]:font-medium [&_h2]:tracking-tight [&_h2]:text-foreground md:[&_h2]:text-xl",
+  "[&_h3]:mt-12! [&_h3]:mb-2! [&_h3]:text-xs [&_h3]:uppercase [&_h3]:tracking-[0.15em] [&_h3]:text-(--muted)",
+  "[&>:first-child]:mt-0!",
+  "[&_img]:my-6 [&_img]:rounded-md [&_img]:border [&_img]:border-(--border)",
+  // an *italic line* right under a photo reads as its caption
+  "[&_p:has(>img)+p>em:only-child]:block [&_p:has(>img)+p>em:only-child]:-mt-4 [&_p:has(>img)+p>em:only-child]:text-[13px] [&_p:has(>img)+p>em:only-child]:text-(--muted)",
+  "[&_blockquote]:border-l [&_blockquote]:border-(--border) [&_blockquote]:pl-4 [&_blockquote]:text-(--text)/70",
+  "[&_code]:text-[0.9em] [&_code]:text-(--accent)",
+].join(" ");
+
+const navLink =
+  "group flex flex-col gap-1 text-[14px] text-(--text)/80 transition-colors hover:text-(--accent)";
+---
+
+<BaseLayout title={`${note.label} · ${note.data.title}`}>
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <a
+        href="/weeknotes"
+        class="mb-10 inline-block text-xs uppercase tracking-[0.15em] text-(--muted) transition-colors hover:text-(--accent)"
+        >← weeknotes</a
+      >
+
+      <header class="mb-14">
+        <p class="mb-3 font-mono text-xs text-(--muted)">
+          #{note.label} · {readingTime(note)} min read
+        </p>
+        <h1 class="mb-3 text-3xl leading-tight sm:text-4xl">
+          {note.data.title}
+        </h1>
+        <p class="font-mono text-xs text-(--muted)">
+          {weekRange(note)}, {note.sunday.getUTCFullYear()}
+        </p>
+      </header>
+
+      <div class={prose}>
+        <Content />
+      </div>
+
+      {
+        (newer || older) && (
+          <nav class="mt-24 grid grid-cols-2 gap-6 border-t border-(--border) pt-8">
+            <div>
+              {older && (
+                <a href={weeknoteHref(older)} class={navLink}>
+                  <span class="font-mono text-xs text-(--muted)">
+                    ← #{older.label}
+                  </span>
+                  {older.data.title}
+                </a>
+              )}
+            </div>
+            <div class="text-right">
+              {newer && (
+                <a href={weeknoteHref(newer)} class:list={[navLink, "items-end"]}>
+                  <span class="font-mono text-xs text-(--muted)">
+                    #{newer.label} →
+                  </span>
+                  {newer.data.title}
+                </a>
+              )}
+            </div>
+          </nav>
+        )
+      }
+    </article>
+  </main>
+</BaseLayout>

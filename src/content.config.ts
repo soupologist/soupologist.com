@@ -101,11 +101,35 @@ const tieritems = defineCollection({
     }),
 });
 
+// weeknotes — one per ISO week (monday → sunday), named by the week:
+//   weeknotes/2026-w47.md            just words
+//   weeknotes/2026-w47/index.md      words + photos sitting next to it
+//                                    (reference them as ./1.jpg)
+// the week number and date range come from the name, so frontmatter is only
+// the title. lives at /weeknotes/2026/47. `draft: true` shows up in
+// `npm run dev` but not in the build
+const weeknotes = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/weeknotes",
+    generateId: ({ entry }) =>
+      entry
+        .replace(/\/index\.md$/, "")
+        .replace(/\.md$/, "")
+        .toLowerCase(),
+  }),
+  schema: z.object({
+    title: z.string(),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   blog,
   music,
   now,
   changelog,
+  weeknotes,
   work,
   tierlists,
   tieritems,

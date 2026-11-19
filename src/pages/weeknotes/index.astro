@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getWeeknotes, weekRange, weeknoteHref } from "../../lib/weeknotes";
+
+// a log of weeks, newest first. each week is a file in content/weeknotes
+const notes = await getWeeknotes();
+---
+
+<BaseLayout title="weeknotes" description="a log of weeks, one at a time.">
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <h1 class="mb-4 text-6xl tracking-loose sm:text-8xl">weeknotes</h1>
+      <p class="mb-16 text-xs uppercase tracking-[0.15em] text-(--muted)">
+        a log of weeks, one at a time
+      </p>
+
+      {
+        notes.length === 0 ? (
+          <p class="text-[15px] text-(--muted)">nothing yet. soon.</p>
+        ) : (
+          <ol class="border-t border-(--border)">
+            {notes.map((note) => (
+              <li class="border-b border-(--border)">
+                <a
+                  href={weeknoteHref(note)}
+                  class="group flex flex-col gap-1 py-6 sm:flex-row sm:items-baseline sm:gap-6"
+                >
+                  <span class="shrink-0 font-mono text-xs text-(--muted) transition-colors group-hover:text-(--accent) sm:w-24">
+                    #{note.label}
+                  </span>
+                  <span class="flex-1 text-[15px] text-(--text)/90 md:text-[16px]">
+                    {note.data.title}
+                    {note.data.draft && (
+                      <span class="ml-2 text-xs text-(--accent)">(draft)</span>
+                    )}
+                  </span>
+                  <span class="shrink-0 font-mono text-xs text-(--muted)">
+                    {weekRange(note)}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </article>
+  </main>
+</BaseLayout>
