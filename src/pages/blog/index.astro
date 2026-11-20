@@ -1,61 +1,68 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  getPosts,
+  readingTime,
+  shortDate,
+  year,
+  type Post,
+} from "../../lib/blog";
+// post titles are set in the same serif as the posts themselves
+import "@fontsource-variable/newsreader/opsz.css";
 
-const posts = await getCollection("blog");
+// newest first, grouped by year
+const posts = await getPosts();
+const years = new Map<number, Post[]>();
+for (const post of posts) {
+  const y = year(post);
+  years.set(y, [...(years.get(y) ?? []), post]);
+}
 ---
 
-<BaseLayout title="blog">
-  <main class="px-4 md:px-6">
-    {/* Top spacing */}
-    <div class="pt-20 md:pt-24"></div>
+<BaseLayout title="blog" description="longer writing, every now and then.">
+  <main class="min-h-screen bg-[#070707] text-foreground">
+    <article class="mx-auto max-w-2xl px-6 pb-32 pt-36 md:px-10 md:pt-44">
+      <h1 class="mb-4 text-6xl tracking-loose sm:text-8xl">blog</h1>
+      <p class="mb-16 text-xs uppercase tracking-[0.15em] text-(--muted)">
+        longer writing, every now and then
+      </p>
 
-    {/* Main panel */}
-    <section
-      class="mx-auto max-w-3xl border border-(--border) bg-(--surface) px-5 py-6 md:px-7 md:py-8"
-    >
-      {/* Header */}
-      <div class="mb-8 flex items-end justify-between border-b border-(--border) pb-4">
-        <div>
-          <p class="mb-2 text-[10px] uppercase tracking-[0.25em] text-foreground opacity-60">
-            archive
-          </p>
-
-          <h1 class="text-2xl md:text-3xl font-head tracking-widest leading-none">
-            blog
-          </h1>
-        </div>
-      </div>
-
-      {/* Posts */}
-      <div class="divide-y divide-(--border)">
-        {
-          posts.map((post, index) => (
-            <a href={`/blog/${post.id}`}>
-              <article class="group grid grid-cols-[28px_1fr] gap-4 py-4 transition-all duration-200 hover:translate-x-0.5">
-                {/* Number */}
-                <div class="pt-0.5 text-xs text-foreground opacity-35 group-hover:opacity-80 transition-opacity">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
-
-                {/* Content */}
-                <div>
-                  <h2 class="text-lg md:text-xl tracking-tight text-(--text) transition-colors group-hover:text-foreground">
-                    {post.data.title}
-                  </h2>
-
-                  <p class="mt-1 text-xs text-(--text) opacity-45">
-                    {post.data.date}
-                  </p>
-                </div>
-              </article>
-            </a>
+      {
+        posts.length === 0 ? (
+          <p class="text-[15px] text-(--muted)">nothing yet. soon.</p>
+        ) : (
+          [...years].map(([y, list]) => (
+            <section class="mb-14 last:mb-0">
+              <h2 class="mb-3 font-mono text-xs text-(--muted)">{y}</h2>
+              <ol class="border-t border-(--border)">
+                {list.map((post) => (
+                  <li class="border-b border-(--border)">
+                    <a
+                      href={`/blog/${post.id}`}
+                      class="group flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:gap-6"
+                    >
+                      <span class="shrink-0 font-mono text-xs text-(--muted) transition-colors group-hover:text-(--accent) sm:w-16">
+                        {shortDate(post)}
+                      </span>
+                      <span class="flex-1 font-['Newsreader_Variable',Georgia,serif] text-[19px] leading-snug text-foreground/90 transition-colors group-hover:text-foreground md:text-[21px]">
+                        {post.data.title}
+                        {post.data.draft && (
+                          <span class="ml-2 font-mono text-xs text-(--accent)">
+                            (draft)
+                          </span>
+                        )}
+                      </span>
+                      <span class="shrink-0 font-mono text-xs text-(--muted)">
+                        {readingTime(post)} min
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </section>
           ))
-        }
-      </div>
-    </section>
-
-    {/* Bottom spacing */}
-    <div class="h-20 md:h-24"></div>
+        )
+      }
+    </article>
   </main>
 </BaseLayout>

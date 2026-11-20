@@ -6,6 +6,8 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.string(),
+    // drafts show up in `npm run dev` but never in the built site
+    draft: z.boolean().default(false),
   }),
 });
 
